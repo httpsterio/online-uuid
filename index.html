@@ -1,13 +1,54 @@
-<!-- Add source (minified 4.6kB) -->
-<script src="suuid.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="robots" content="noindex">
+    <title>ID Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="img/favicon-32.png" sizes="32x32" />
+    <link rel="icon" href="img/favicon-192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="img/favicon-180.png" />
+    <meta name="msapplication-TileImage" content="img/favicon-270.png" />
+  </head>
+  <body>
+    <main>
+        <h1>Here's your new ID</h1>
+        <span id="uuid"></span>
+        <button id="copyButton" class="btn" onclick="copyContent()">Copy to clipboard</button>
+        <span id="copyText"></span>
+        <button id="copyButton" class="btn" onclick="newUid()">Generate new ID</button>
+    </main>
+    <script src="suuid.js"></script>
+    <script>
+      // new instance of ShortUniqueId
+      var uid = new ShortUniqueId({ length: 6, dictionary: "alphanum_lower", debug: false, shuffle: false});
 
-<!-- Usage -->
-<script>
-  // Instantiate
-  var uid = new ShortUniqueId({ length: 6, dictionary: "alphanum_lower", debug: false, shuffle: false});
-  
-  // Random UUID
-  document.write(uid.rnd());
+      // get the span for the ID text and create new ID inside it
+      var uuid = document.getElementById("uuid");
+      uuid.textContent = uid.rnd();
 
-  // Sequential UUID
-</script>
+      var copyText = document.getElementById('copyButton');
+      const copyContent = async () => {
+        try {
+          await navigator.clipboard.writeText(uuid.textContent);
+          console.log('Content copied to clipboard');
+          copyText.textContent = "Copied!";
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+          copyText.textContent = "Damn, couldn't copy!";
+        }
+      }
+      const newUid = async () => {
+        try {
+        uuid.textContent = uid.rnd();
+        copyText.textContent = "Copy to clipboard";
+
+        } catch (err) {
+          console.error('whoops ', err);
+        }
+      }
+    </script>
+  </body>
+</html>
