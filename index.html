@@ -33,7 +33,7 @@
         try {
           await navigator.clipboard.writeText(uuid.textContent);
           console.log("Content copied to clipboard");
-          copyText.textContent = "Copied!";
+          copyButton.textContent = "Copied!";
         } catch (err) {
           console.error("Failed to copy: ", err);
           copyText.textContent = "Damn, couldn't copy!";
@@ -42,7 +42,7 @@
 
       const newUid = () => {
         uuid.textContent = uid.rnd();
-        copyText.textContent = "Copy to clipboard";
+        copyButton.textContent = "Copy to clipboard";
       };
 
       document.getElementById("newUidButton").addEventListener("click", newUid);
