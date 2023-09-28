@@ -22,33 +22,30 @@
     </main>
     <script src="suuid.js"></script>
     <script>
-      // new instance of ShortUniqueId
-      var uid = new ShortUniqueId({ length: 6, dictionary: "alphanum_lower", debug: false, shuffle: false});
+      const uid = new ShortUniqueId({ length: 6, dictionary: "alphanum_lower", debug: false, shuffle: false });
+      const uuid = document.getElementById("uuid");
+      const copyButton = document.getElementById("copyButton");
+      const copyText = document.getElementById("copyText");
 
-      // get the span for the ID text and create new ID inside it
-      var uuid = document.getElementById("uuid");
       uuid.textContent = uid.rnd();
 
-      var copyText = document.getElementById('copyButton');
-      const copyContent = async () => {
+      copyButton.addEventListener("click", async () => {
         try {
           await navigator.clipboard.writeText(uuid.textContent);
-          console.log('Content copied to clipboard');
+          console.log("Content copied to clipboard");
           copyText.textContent = "Copied!";
         } catch (err) {
-          console.error('Failed to copy: ', err);
+          console.error("Failed to copy: ", err);
           copyText.textContent = "Damn, couldn't copy!";
         }
-      }
-      const newUid = async () => {
-        try {
+      });
+
+      const newUid = () => {
         uuid.textContent = uid.rnd();
         copyText.textContent = "Copy to clipboard";
+      };
 
-        } catch (err) {
-          console.error('whoops ', err);
-        }
-      }
+      document.getElementById("newUidButton").addEventListener("click", newUid);
     </script>
   </body>
 </html>
